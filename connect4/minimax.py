@@ -26,13 +26,14 @@ while len(child_order) < BOARD_SIZE ** 2:
 
 child_order = np.array(child_order)
 
-print(child_order)
-
 
 @njit()
 def minimax(position, depth, alpha, beta, maximizingPlayer):
     gameOver = isGameOver(position)
-    if depth == 0 or gameOver != 0:
+    if gameOver != 0:
+        return gameOver * 10000
+
+    elif depth == 0:
         return evaluation(position)
 
     if maximizingPlayer:

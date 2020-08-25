@@ -4,7 +4,7 @@ import math
 import numpy as np
 from minimax import minimax
 
-@njit(parallel=True)
+@njit(parallel=True, nogil=True)
 def getScores(board, depth):
     scores = []
 
