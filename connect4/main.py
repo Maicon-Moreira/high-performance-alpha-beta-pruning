@@ -1,39 +1,25 @@
-from numba import njit, prange
+from config import *
 import numpy as np
-from tqdm import tqdm
-import math
-from random import choice
-from config import BOARD_SIZE
 from isGameOver import isGameOver
-from minimax import minimax
 from AIPlay import AIPlay
-from getScores import getScores
 from printBoard import printBoard
 
-board = np.zeros((BOARD_SIZE, BOARD_SIZE))
-
-# board = np.array([
-#     [0, -1, -1, -1, -1],
-#     [0, 1, 0, 0, 0],
-#     [0, 0, 1, 0, 0],
-#     [0, 0, 0, 1, 0],
-#     [0, 0, 0, 0, 0],
-# ])
-
-print(isGameOver(board))
-
+board = np.zeros((BOARD_WIDTH, BOARD_HEIGHT))
 
 while True:
-    AIPlay(board, depth=8)
+    AIPlay(board, INITIAL_DEPTH)
     printBoard(board)
 
-    selectedPlay = input('Insira a jogada: \n')
+    board_stack = np.zeros((BOARD_WIDTH,)).astype('int')
 
-    selectedPlay = selectedPlay.split(' ')
-    selectedPlay = [int(a) for a in selectedPlay]
+    for x in range(BOARD_WIDTH):
+        for y in range(BOARD_HEIGHT):
+            if board[x][y] != 0:
+                board_stack[x] += 1
 
-    print(selectedPlay)
+    selectedPlay = int(input('Insira a jogada: \n'))
 
-    board[selectedPlay[0]][selectedPlay[1]] = -1
+    board[selectedPlay][board_stack[selectedPlay]] = -1
 
     printBoard(board)
+    print('\n'*1000)

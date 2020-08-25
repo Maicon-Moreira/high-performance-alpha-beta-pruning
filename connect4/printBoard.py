@@ -1,19 +1,17 @@
-from config import BOARD_SIZE
+from config import *
 from isGameOver import isGameOver
 
-def printBoard(board):
-    text = '-'*(6*BOARD_SIZE+1)+'\n'
 
-    for x in range(BOARD_SIZE):
+def printBoard(board):
+    text = '-'*(6*BOARD_WIDTH+1)+'\n'
+
+    for x in range(BOARD_HEIGHT):
         line = '|'
-        for y in range(BOARD_SIZE):
-            item = board[x][y]
+        for y in range(BOARD_WIDTH):
+            item = board[y][BOARD_HEIGHT - 1 - x]
 
             if item == 0:
                 line += f'     |'
-
-            # if item == 0:
-            #     line += f' {x} {y} |'
 
             if item == 1:
                 line += f'  X  |'
@@ -23,16 +21,16 @@ def printBoard(board):
 
         line += '     '
 
-        for y in range(BOARD_SIZE):
-            item = board[x][y]
+        for y in range(BOARD_WIDTH):
+            item = board[y][BOARD_HEIGHT - 1 - x]
 
             if item == 0:
-                line += f' {x} {y} |'
+                line += f'  {y}  |'
 
             else:
                 line += f'     |'
 
-        line += '\n'+'-'*(6*BOARD_SIZE+1)
+        line += '\n'+'-'*(6*BOARD_WIDTH+1)
 
         text += line+'\n'
 

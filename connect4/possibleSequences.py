@@ -5,11 +5,11 @@ possible_sequences = []
 
 
 def valid_position(x, y):
-    return x >= 0 and y >= 0 and x < BOARD_SIZE and y < BOARD_SIZE
+    return x >= 0 and y >= 0 and x < BOARD_WIDTH and y < BOARD_HEIGHT
 
 
-for x in range(BOARD_SIZE):
-    for y in range(BOARD_SIZE):
+for x in range(BOARD_WIDTH):
+    for y in range(BOARD_HEIGHT):
 
         # horizontal
         if valid_position(x, y) and valid_position(x + SEQUENCE_TO_WIN - 1, y):

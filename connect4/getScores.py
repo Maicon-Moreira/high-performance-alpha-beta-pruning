@@ -1,24 +1,37 @@
-from numba import njit, prange
-from config import BOARD_SIZE
+from numba import njit, prange, jit
+from config import *
 import math
 import numpy as np
 from minimax import minimax
 
-@njit(parallel=True, nogil=True)
-def getScores(board, depth):
+
+@jit(nopython=False)
+def print_results(column, score, calculations):
+    print('coluna:', column, '     pontuação:', score)
+    print('cenários futuros visitados:', calculations[0])
+    print()
+
+
+@njit(parallel=True)
+def getScores(board, depth, board_stack):
     scores = []
 
-    for value in prange(BOARD_SIZE**2):
-        x = math.floor(value/5)
-        y = value % 5
+    for x in prange(BOARD_WIDTH):
+        y = board_stack[x]
 
-        if board[x][y] == 0:
-            copiedArray = np.copy(board)
-            copiedArray[x][y] = 1
+        if y < BOARD_HEIGHT:
+            copiedBoard = np.copy(board)
+            copiedBoard[x][y] = 1
 
-            score = minimax(copiedArray, depth, -999999, 999999, False)
+            copiedStack = np.copy(board_stack)
+            copiedStack[x] += 1
+
+            calculations = np.array([0])
+
+            score = minimax(copiedBoard, copiedStack,
+                            depth, -99999, 99999, False, calculations)
             scores.append([x, y, score])
 
-            print(x, y, score)
+            print_results(x, score, calculations)
 
     return scores
