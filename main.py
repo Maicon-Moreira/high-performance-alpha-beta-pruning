@@ -12,9 +12,19 @@ from printBoard import printBoard
 
 board = np.zeros((BOARD_SIZE, BOARD_SIZE))
 
+# board = np.array([
+#     [0, -1, -1, -1, -1],
+#     [0, 1, 0, 0, 0],
+#     [0, 0, 1, 0, 0],
+#     [0, 0, 0, 1, 0],
+#     [0, 0, 0, 0, 0],
+# ])
+
+print(isGameOver(board))
+
 
 while True:
-    AIPlay(board)
+    AIPlay(board, depth=8)
     printBoard(board)
 
     selectedPlay = input('Insira a jogada: \n')

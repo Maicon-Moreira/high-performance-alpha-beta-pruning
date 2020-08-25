@@ -5,7 +5,7 @@ import numpy as np
 from minimax import minimax
 
 @njit(parallel=True)
-def getScores(board):
+def getScores(board, depth):
     scores = []
 
     for value in prange(BOARD_SIZE**2):
@@ -16,7 +16,7 @@ def getScores(board):
             copiedArray = np.copy(board)
             copiedArray[x][y] = 1
 
-            score = minimax(copiedArray, 6, -999999, 999999, False)
+            score = minimax(copiedArray, depth, -999999, 999999, False)
             scores.append([x, y, score])
 
             print(x, y, score)
